@@ -7,6 +7,11 @@ import Signup from '../screens/Signup';
 import Homepage from '../screens/Homepage';
 import Profile from '../screens/Profile';
 import History from '../screens/History';
+import VehicleRepairInfo from '../screens/VehicleRepairInfo';
+import GridBtn from '../Components/HomeGridBtn/GridBtn';
+import GeneralServicingDetails from '../screens/GeneralServicingDetails';
+import GeneralServicingBill from '../screens/GeneralServicingBill';
+import GeneralServicingDateTime from '../screens/GeneralServicingDateTime';
 
 export const AuthStack = () => {
   const Stack = createNativeStackNavigator();
@@ -44,6 +49,26 @@ export const AuthStack = () => {
       <Stack.Screen
         name="History"
         component={History}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="VehicleRepairInfo"
+        component={VehicleRepairInfo}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GeneralServicingDetails"
+        component={GeneralServicingDetails}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GeneralServicingBill"
+        component={GeneralServicingBill}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GeneralServicingDateTime"
+        component={GeneralServicingDateTime}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

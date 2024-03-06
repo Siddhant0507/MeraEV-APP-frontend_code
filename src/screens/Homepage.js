@@ -1,6 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+
 import Layout from '../Components/Layout/Layout';
+import HomeCarousel from '../Components/Carousel/HomeCarousel';
+import GridBtn from '../Components/HomeGridBtn/GridBtn';
 
 const Homepage = ({navigation}) => {
   const handleClick = () => {
@@ -8,7 +11,13 @@ const Homepage = ({navigation}) => {
   };
   return (
     <Layout>
-      <Text>Homepage</Text>
+      {/* Crousel Element */}
+      <View className="my-5">
+        <HomeCarousel />
+      </View>
+
+      {/* Grid Buttons */}
+      <GridBtn />
     </Layout>
   );
 };
