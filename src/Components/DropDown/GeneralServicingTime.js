@@ -1,14 +1,19 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import {useDispatch} from 'react-redux';
+import {updateSelectedTime} from '../../../redux/features/orderInfo/orderSlice';
 const GeneralServicingTime = () => {
   const [selectedValue, setSelectedValue] = useState('');
+  const dispatch = useDispatch();
+  const handleValueChange = itemValue => {
+    setSelectedValue(itemValue);
+    dispatch(updateSelectedTime(itemValue));
+  };
   return (
     <View>
       <Text>Select an option:</Text>
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+      <Picker selectedValue={selectedValue} onValueChange={handleValueChange}>
         <Picker.Item label="10:00 AM" value="10:00 AM" />
         <Picker.Item label="11:00 AM" value="11:00 AM" />
         <Picker.Item label="12:00 PM" value="12:00 PM" />

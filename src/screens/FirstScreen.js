@@ -1,4 +1,4 @@
-import {Button, Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import macImage from '../Public/Images/MechanicImage.jpeg';
 
@@ -9,6 +9,7 @@ const FirstScreen = ({navigation}) => {
         source={macImage}
         className="h-[300px] w-full cover rounded-xl mb-5"
       />
+
       <Text className="font-bold text-3xl text-black text-center">
         Electrify Your Ride, Empower Your Journey!
       </Text>

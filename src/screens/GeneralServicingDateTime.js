@@ -1,55 +1,42 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+
 import GeneralServicingTime from '../Components/DropDown/GeneralServicingTime';
+import BottomBtn from '../Components/BottomButton/BottomBtn';
+import BikeDetails from '../Components/DropDown/BikeDetails';
+import DatePicker from '../Components/DatePickerCalender/DatePicker';
 
-const GeneralServicingDateTime = () => {
-  const [selected, setSelected] = useState('');
+import {useDispatch} from 'react-redux';
+import {
+  updateSelectedService,
+  updateTotalCost,
+} from '../../redux/features/orderInfo/orderSlice';
 
-  const today = new Date();
-  const minDate = today.toISOString().split('T')[0];
-
-  const customDayStyle = date => {
-    return {
-      container: {
-        backgroundColor: '#79d273',
-      },
-      text: {
-        color: '#ffff',
-      },
-    };
+const GeneralServicingDateTime = ({navigation}) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    navigation.navigate('GeneralServicingBill');
+    dispatch(updateSelectedService('General Servicing'));
+    dispatch(updateTotalCost('699'));
   };
-
   return (
-    <View className="p-3">
-      <Text className="text-2xl font-bold text-black mb-4">
-        Select Servicing Date -
-      </Text>
-      <Calendar
-        enableSwipeMonths={true}
-        hideExtraDays={true}
-        minDate={minDate}
-        style={{
-          borderWidth: 1,
-          borderColor: 'gray',
-          height: 370,
-        }}
-        onDayPress={day => {
-          setSelected(day.dateString);
-        }}
-        markingType={'custom'}
-        markedDates={{
-          [selected]: {
-            selected: true,
-            customStyles: customDayStyle(selected),
-          },
-        }}
-      />
-      <Text className="text-2xl font-bold text-black my-3">
-        Select Servicing Time -
-      </Text>
-      <GeneralServicingTime />
-    </View>
+    <>
+      <View className="p-3 flex-1">
+        <Text className="text-xl font-bold text-black">Select Bike - </Text>
+        <BikeDetails />
+        <Text className="text-xl font-bold text-black mb-1 mt-6">
+          Select Servicing Date -
+        </Text>
+        <DatePicker />
+        <Text className="text-xl font-bold text-black my-1 mt-6">
+          Select Servicing Time -
+        </Text>
+        <GeneralServicingTime />
+      </View>
+      <TouchableOpacity onPress={handleClick}>
+        <BottomBtn name={'Next'} />
+      </TouchableOpacity>
+    </>
   );
 };
 

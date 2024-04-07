@@ -4,20 +4,25 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 const Login = ({navigation}) => {
-  const handleSubmit = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const HandleLogin = async () => {
     try {
+      if (!phoneNumber) {
+        Alert.alert('Error', 'Please enter your phone number');
+        return;
+      }
       navigation.navigate('Home');
     } catch (error) {
-      console.log(error);
+      Alert.alert(error.response.data.message);
     }
   };
 
-  const [text, onChangeText] = useState('');
   return (
     <View className="mt-20 mx-4 ">
       <Text className="font-bold text-4xl text-black text-center mb-4">
@@ -29,13 +34,13 @@ const Login = ({navigation}) => {
       </Text>
       <TextInput
         className="h-[55px] bg-white w-full rounded-xl border-[0.5px] text-lg pl-4 mt-3"
-        onChangeText={onChangeText}
+        onChangeText={setPhoneNumber}
         placeholder="Enter Your Phone Number"
         keyboardType="numeric"
-        value={text}
+        value={phoneNumber}
       />
       <TouchableOpacity
-        onPress={handleSubmit}
+        onPress={HandleLogin}
         className="h-[55px] w-full bg-[#31A062] flex items-center justify-center rounded-xl mt-6 ">
         <Text className="text-lg font-semibold text-white">LOGIN</Text>
       </TouchableOpacity>

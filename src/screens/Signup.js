@@ -4,27 +4,15 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
-
-import {useDispatch} from 'react-redux';
-import {updateName} from '../Redux/Features/UserDetails/UserDetailsSlice';
 
 const Signup = ({navigation}) => {
   const [text, onChangeText] = useState('');
   const [number, onChangeNumber] = useState('');
   const [email, onChangeEmail] = useState('');
 
-  const dispatch = useDispatch();
-
   const handleSignup = () => {
-    const payload = {
-      Name: text,
-      Email: email,
-      PhoneNumber: number,
-    };
-    dispatch(updateName(payload));
     navigation.navigate('Home');
   };
 
