@@ -1,37 +1,32 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, Text, View, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Layout from '../Components/Layout/Layout';
 
 import {useDispatch, useSelector} from 'react-redux';
-import OrderDetails from '../../redux/features/orderInfo/orderSlice';
+import {fetchHistory} from '../../redux/features/userHistory/historySlice';
 
 const History = () => {
   const dispatch = useDispatch();
-  const orderData = useSelector(state => state.order.orderData);
-  const loading = useSelector(state => state.order.loading);
-  const error = useSelector(state => state.order.error);
-  useEffect(() => {
-    dispatch(OrderDetails());
-  }, [dispatch]);
+  // const {data} = useSelector(state => state.history);
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>Error: {error}</Text>;
-  }
-  if (!orderData) {
-    return <Text>No order data available</Text>;
-  }
+  // useEffect(() => {
+  //   dispatch(fetchHistory());
+  // }, [dispatch]);
 
   return (
     <Layout>
-      <Text>order Name: {order.orderData}</Text>
-      <Text>Service Type: {orderData.serviceType}</Text>
-      <Text>Bike Name: {orderData.bikename}</Text>
-      <Text>Date of Service: {orderData.dateOfService}</Text>
-      <Text>Cost: {orderData.cost}</Text>
+      {/* <FlatList
+        data={data}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => (
+          <View>
+            <Text>{item.rating}</Text>
+            <Text>{item.imdb_url}</Text>
+          </View>
+        )}
+      /> */}
+      {data}
+      <Text>hello</Text>
     </Layout>
   );
 };
