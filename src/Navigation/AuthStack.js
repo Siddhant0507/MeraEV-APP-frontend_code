@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import FirstScreen from '../screens/FirstScreen';
 import Login from '../screens/Login';
@@ -17,87 +17,110 @@ import AboutUs from '../screens/AboutUs';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OtpScreen from '../screens/OtpScreen';
+import Config from '../config/config';
 
 export const AuthStack = () => {
   const Stack = createNativeStackNavigator();
   const [isAuth, setIsAuth] = useState(null);
 
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('token');
+
+      if (userToken) {
+        Config.token = userToken
+        setIsAuth(true); // User is logged in
+      } else {
+        setIsAuth(false); // User is not logged in
+      }
+    } catch (error) {
+      console.error('Error retrieving user data:', error);
+    }
+  };
+
+  if (isAuth === null) {
+    return null;
+  }
   return (
-    <Stack.Navigator initialRouteName="FirstScreen">
+    <Stack.Navigator initialRouteName={isAuth ? 'Home' : 'FirstScreen'}>
       <Stack.Screen
         name="Home"
         component={Homepage}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="History"
         component={History}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="VehicleRepairInfo"
         component={VehicleRepairInfo}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="GeneralServicingDetails"
         component={GeneralServicingDetails}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="GeneralServicingBill"
         component={GeneralServicingBill}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="GeneralServicingDateTime"
         component={GeneralServicingDateTime}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="FirstScreen"
         component={FirstScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Signup"
         component={Signup}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="BookingConfirm"
         component={BookingConfirm}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="HelpAndSupport"
         component={HelpAndSupport}
-        options={{headerTitle: 'Help and Support'}}
+        options={{ headerTitle: 'Help and Support' }}
       />
       <Stack.Screen
         name="AboutUs"
         component={AboutUs}
-        options={{headerTitle: 'About US'}}
+        options={{ headerTitle: 'About US' }}
       />
       <Stack.Screen
         name="OtpScreen"
         component={OtpScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="VehicleRepair"
         component={VehicleRepairInfo}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

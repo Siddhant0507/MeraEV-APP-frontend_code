@@ -6,10 +6,17 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const Login = ({navigation}) => {
+import { useDispatch } from 'react-redux';
+import { loginThunk } from '../../redux/features/auth/authSlice';
+import auth from '@react-native-firebase/auth';
+
+const Login = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [confirm, setConfirm] = useState(null);
+
+  const dispatch = useDispatch();
 
   const HandleLogin = async () => {
     try {
@@ -17,9 +24,28 @@ const Login = ({navigation}) => {
         Alert.alert('Error', 'Please enter your phone number');
         return;
       }
-      navigation.navigate('Home');
+      if (phoneNumber.length !== 10) {
+        Alert.alert("Warning", "Please enter valid phone number");
+      }
+      else {
+        const data = {
+          Phonemuber: phoneNumber,
+          islogin: true
+        }
+        const response = await dispatch(loginThunk(phoneNumber));
+        if (response?.success) {
+          // const confirmation = await auth().signInWithPhoneNumber(`+91${phoneNumber}`);
+          // console.log("confirmationconfirmation", confirmation);
+          // setConfirm(confirmation);
+          // navigation.navigate('OtpScreen', { data, response ,confirmation});
+          navigation.navigate('OtpScreen', { data, response });
+
+        }
+      }
+
     } catch (error) {
-      Alert.alert(error.response.data.message);
+      console.log(error.response.data);
+      Alert.alert("Somthing went wrong");
     }
   };
 

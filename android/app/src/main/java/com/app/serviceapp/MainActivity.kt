@@ -1,4 +1,4 @@
-package com.serviceapp
+package com.app.serviceapp
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

@@ -8,16 +8,16 @@ import {
 import React from 'react';
 import BikeDetails from '../Components/DropDown/BikeDetails';
 import VehicleProblem from '../Components/DropDown/VehicleProblem';
-import {Divider} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import DatePicker from '../Components/DatePickerCalender/DatePicker';
 import GeneralServicingTime from '../Components/DropDown/GeneralServicingTime';
 
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   updateSelectedService,
   updateTotalCost,
 } from '../../redux/features/orderInfo/orderSlice';
-const VehicleRepairInfo = ({navigation}) => {
+const VehicleRepairInfo = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {

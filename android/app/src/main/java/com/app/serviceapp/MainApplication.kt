@@ -1,4 +1,4 @@
-package com.serviceapp
+package com.app.serviceapp
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -1,12 +1,14 @@
-import {configureStore} from '@reduxjs/toolkit';
-import authSlice from './features/auth/authSlice';
+import { configureStore } from '@reduxjs/toolkit';
 import orderSlice from './features/orderInfo/orderSlice';
 import historySlice from './features/userHistory/historySlice';
-
+import authReducer from '../redux/features/auth/authSlice'
+import userReducer from '../redux/features/user/userSlice';
 export const store = configureStore({
   reducer: {
     order: orderSlice,
     history: historySlice,
+    auth: authReducer,
+    user: userReducer
   },
 });
 

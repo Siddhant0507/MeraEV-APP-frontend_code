@@ -1,13 +1,26 @@
-import {Alert, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Icons from 'react-native-vector-icons/AntDesign';
 import Layout from '../Components/Layout/Layout';
+import { getUserDetailsThunk } from '../../redux/features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const [userData, setUserData] = useState()
+
+  useEffect(async () => {
+    const respo = await dispatch(getUserDetailsThunk())
+    setUserData(respo)
+  }, [])
+
+  console.log("userDetailsuserDetails", userData);
 
   handleLogout = async () => {
+    await AsyncStorage.removeItem("token")
     navigation.navigate('Login');
   };
   return (
@@ -16,9 +29,9 @@ const Profile = () => {
         <Text className="text-4xl font-semibold text-black my-7">Profile</Text>
         <View className="flex items-center gap-3">
           <Icons name="user" size={132} color="#31A062" />
-          <Text className="text-xl font-semibold text-black">name</Text>
-          <Text className="text-xl font-semibold text-black">phone number</Text>
-          <Text className="text-xl font-semibold text-black">emali</Text>
+          <Text className="text-xl font-semibold text-black">{userData?.name}</Text>
+          <Text className="text-xl font-semibold text-black">{userData?.phoneNumber}</Text>
+          <Text className="text-xl font-semibold text-black">{userData?.email}</Text>
         </View>
 
         <View className="flex mx-4 gap-4 mt-7">

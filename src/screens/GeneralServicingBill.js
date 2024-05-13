@@ -1,13 +1,23 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
-import {Divider} from 'react-native-paper';
-import {useSelector} from 'react-redux';
+import { Divider } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrderThunk } from '../../redux/features/orderInfo/orderSlice';
 
-const GeneralServicingBill = ({navigation}) => {
-  const {selectedBike, selectedTime, serviceType, selectedDate, baseCost} =
+const GeneralServicingBill = ({ navigation }) => {
+  const disatch = useDispatch()
+  const { selectedBike, selectedTime, serviceType, selectedDate, baseCost } =
     useSelector(state => state.order);
   const calculateGST = (parseInt(baseCost) * 18) / 100;
   const totalCost = parseInt(parseInt(baseCost) + calculateGST + calculateGST);
+  const makeBookOrder = async () => {
+    const responce = await disatch(createOrderThunk(serviceType, selectedBike, selectedDate, totalCost))
+    if (responce?.success) {
+      navigation.navigate('BookingConfirm')
+    } else {
+      Alert.alert('Opps', 'Something went wrong');
+    }
+  }
   return (
     <>
       <View className="p-3 flex-1">
@@ -72,7 +82,7 @@ const GeneralServicingBill = ({navigation}) => {
         </Text>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('BookingConfirm')}
+          onPress={() => makeBookOrder()}
           className="h-[55px] w-full  bg-[#79d273] flex justify-center items-center mt-5 rounded-md">
           <Text className="text-lg text-white font-semibold ">
             Book Appointment
